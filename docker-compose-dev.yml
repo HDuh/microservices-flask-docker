@@ -1,0 +1,41 @@
+version: '3.6'
+
+services:
+  users:
+    container_name: users_flask
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './services/users:/application'
+    expose:
+      - '5000'
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=True
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=postgresql://postgres:postgres@users_db:5432/users_dev
+      - DATABASE_TEST_URL=postgresql://postgres:postgres@users_db:5432/users_test
+    depends_on:
+      - users_db
+
+  users_db:
+    container_name: users_db
+    build:
+      context: ./services/users/project/db
+      dockerfile: Dockerfile
+    ports:
+      - '5435:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - users
