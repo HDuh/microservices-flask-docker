@@ -4,3 +4,7 @@ flask-testing==0.8.1
 psycopg2-binary==2.9.3
 Flask-SQLAlchemy==2.5.1
 gunicorn==20.1.0
+coverage==6.5.0
+flake8==5.0.4
+flask-debugtoolbar==0.13.1
+flask-migrate==3.1.0
