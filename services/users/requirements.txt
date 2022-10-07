@@ -8,3 +8,4 @@ coverage==6.5.0
 flake8==5.0.4
 flask-debugtoolbar==0.13.1
 flask-migrate==3.1.0
+flask-bcrypt==1.0.1
